@@ -15,13 +15,13 @@
             android:id="@+id/displayText"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:text="TextView" />
+            android:text="" />
 
         <TextView
             android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="72dp"
-            android:text="TextView" />
+            android:text="" />
     </LinearLayout>
 
     <LinearLayout
