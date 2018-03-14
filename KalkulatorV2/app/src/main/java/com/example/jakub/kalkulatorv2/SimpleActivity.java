@@ -124,7 +124,7 @@ public class SimpleActivity extends AppCompatActivity {
                 } else {
                     valueOne = Float.parseFloat(editText.getText() + "");
                     add = true;
-                    displayText.setText(valueOne + "+");
+                    displayText.setText(valueOne + " + ");
                     editText.setText(null);
 
                 }
@@ -138,7 +138,7 @@ public class SimpleActivity extends AppCompatActivity {
                 } else {
                     valueOne = Float.parseFloat(editText.getText() + "");
                     sub = true;
-                    displayText.setText(valueOne + "-");
+                    displayText.setText(valueOne + " - ");
                     editText.setText(null);
 
                 }
@@ -152,7 +152,7 @@ public class SimpleActivity extends AppCompatActivity {
                 } else {
                     valueOne = Float.parseFloat(editText.getText() + "");
                     mul = true;
-                    displayText.setText(valueOne + "*");
+                    displayText.setText(valueOne + " * ");
                     editText.setText(null);
 
                 }
@@ -166,11 +166,60 @@ public class SimpleActivity extends AppCompatActivity {
                 } else {
                     valueOne = Float.parseFloat(editText.getText() + "");
                     div = true;
-                    displayText.setText(valueOne + "/");
+                    displayText.setText(valueOne + " / ");
                     editText.setText(null);
 
                 }
             }
         });
+        buttonEQU.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                computeCalculation();
+                displayText.setText(editText.getText().toString() + valueTwo +"="+ valueOne);
+
+                //valueOne = Float.NaN;
+                add= false;
+                sub=false;
+                mul=false;
+                div=false;
+
+            }
+        });
+        buttonC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(editText.getText().length() >0){
+                    CharSequence currentText = editText.getText();
+                    editText.setText(currentText.subSequence(0,currentText.length()-1));
+                }else{
+                    valueOne = Float.NaN;
+                    valueTwo = Float.NaN;
+                    editText.setText("");
+                    displayText.setText("");
+                }
+            }
+        });
+    }
+    private void computeCalculation() {
+        if(!Double.isNaN(valueOne)) {
+            valueTwo = Float.parseFloat(editText.getText().toString());
+            editText.setText(null);
+
+            if(add)
+                valueOne = this.valueOne + valueTwo;
+            else if(sub)
+                valueOne = this.valueOne - valueTwo;
+            else if(mul)
+                valueOne = this.valueOne * valueTwo;
+            else if(div)
+                valueOne = this.valueOne / valueTwo;
+        }
+        else {
+            try {
+                valueOne =  Float.parseFloat(editText.getText().toString());
+            }
+            catch (Exception e){}
+        }
     }
 }

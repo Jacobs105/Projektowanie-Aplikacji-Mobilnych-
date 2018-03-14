@@ -1,6 +1,7 @@
 package com.example.jakub.kalkulatorv2;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -30,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
         simpleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               setContentView(R.layout.simple_calculator);
+
+
+               startActivity(new Intent(MainActivity.this,SimpleActivity.class));
             }
         });
 
