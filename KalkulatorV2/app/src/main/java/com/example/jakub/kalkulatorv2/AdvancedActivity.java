@@ -6,23 +6,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+
 /**
- * Created by Jakub on 2018-03-14.
+ * Created by Jakub on 2018-03-15.
  */
 
-
-
-public class SimpleActivity extends AppCompatActivity {
+public class AdvancedActivity extends AppCompatActivity{
 
     private TextView editText, displayText;
-    private float valueOne;
-    private float valueTwo;
-    private boolean add, sub, mul, div, equ, c;
-
+    private double valueOne;
+    private double valueTwo;
+    private boolean add, sub, mul, div,sin,cos,tan,ln,sqrt,xto2,xtoy,log ,equ, c;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.simple_calculator);
+        setContentView(R.layout.advanced_calculator);
 
         Button button0 = findViewById(R.id.button0);
         Button button1 = findViewById(R.id.button1);
@@ -41,6 +39,15 @@ public class SimpleActivity extends AppCompatActivity {
         Button buttonEQU = findViewById(R.id.buttonEQU);
         Button buttonDOT = findViewById(R.id.buttonDOT);
         Button buttonC = findViewById(R.id.buttonC);
+        Button buttonSIN = findViewById(R.id.buttonSIN);
+        Button buttonCOS = findViewById(R.id.buttonCOS);
+        Button buttonTAN = findViewById(R.id.buttonTAN);
+        Button buttonLN = findViewById(R.id.buttonLN);
+        Button buttonSQRT = findViewById(R.id.buttonSQRT);
+        Button buttonXTo2 = findViewById(R.id.buttonXTo2);
+        Button buttonXToY = findViewById(R.id.buttonXtoY);
+        Button buttonLOG = findViewById(R.id.buttonLOG);
+
 
         displayText = findViewById(R.id.displayText);
         editText = findViewById(R.id.editText);
@@ -122,7 +129,7 @@ public class SimpleActivity extends AppCompatActivity {
                 if (editText == null) {
                     editText.setText("");
                 } else {
-                    valueOne = Float.parseFloat(editText.getText() + "");
+                    valueOne = Double.parseDouble(editText.getText() + "");
                     add = true;
                     displayText.setText(valueOne + " + ");
                     editText.setText(null);
@@ -136,7 +143,7 @@ public class SimpleActivity extends AppCompatActivity {
                 if (editText == null) {
                     editText.setText("");
                 } else {
-                    valueOne = Float.parseFloat(editText.getText() + "");
+                    valueOne = Double.parseDouble(editText.getText() + "");
                     sub = true;
                     displayText.setText(valueOne + " - ");
                     editText.setText(null);
@@ -150,7 +157,7 @@ public class SimpleActivity extends AppCompatActivity {
                 if (editText == null) {
                     editText.setText("");
                 } else {
-                    valueOne = Float.parseFloat(editText.getText() + "");
+                    valueOne = Double.parseDouble(editText.getText() + "");
                     mul = true;
                     displayText.setText(valueOne + " * ");
                     editText.setText(null);
@@ -164,7 +171,7 @@ public class SimpleActivity extends AppCompatActivity {
                 if (editText == null) {
                     editText.setText("");
                 } else {
-                    valueOne = Float.parseFloat(editText.getText() + "");
+                    valueOne = Double.parseDouble(editText.getText() + "");
                     div = true;
                     displayText.setText(valueOne + " / ");
                     editText.setText(null);
@@ -183,6 +190,15 @@ public class SimpleActivity extends AppCompatActivity {
                 sub=false;
                 mul=false;
                 div=false;
+                sin=false;
+                cos= false;
+                tan=false;
+                ln=false;
+                sqrt = false;
+                xto2= false;
+                xtoy= false;
+                log = false;
+
 
             }
         });
@@ -193,17 +209,137 @@ public class SimpleActivity extends AppCompatActivity {
                     CharSequence currentText = editText.getText();
                     editText.setText(currentText.subSequence(0,currentText.length()-1));
                 }else{
-                    valueOne = Float.NaN;
-                    valueTwo = Float.NaN;
+                    valueOne = Double.NaN;
+                    valueTwo = Double.NaN;
                     editText.setText("");
                     displayText.setText("");
                 }
             }
         });
+
+        buttonSIN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (editText == null) {
+                    editText.setText("");
+                } else {
+                    valueOne = Double.parseDouble(editText.getText() + "");
+                    sin = true;
+                    displayText.setText("sin("+valueOne+")");
+                    editText.setText(null);
+
+                }
+            }
+        });
+
+        buttonCOS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (editText == null) {
+                    editText.setText("");
+                } else {
+                    valueOne = Double.parseDouble(editText.getText() + "");
+                    cos = true;
+                    displayText.setText("cos("+valueOne+")");
+                    editText.setText(null);
+
+                }
+            }
+        });
+        buttonTAN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (editText == null) {
+                    editText.setText("");
+                } else {
+                    valueOne = Double.parseDouble(editText.getText() + "");
+                    tan = true;
+                    displayText.setText("tan("+valueOne+")");
+                    editText.setText(null);
+
+                }
+            }
+        });
+        buttonLN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (editText == null) {
+                    editText.setText("");
+                } else {
+                    valueOne = Double.parseDouble(editText.getText() + "");
+                    ln = true;
+                    displayText.setText("ln("+valueOne+")");
+                    editText.setText(null);
+
+                }
+            }
+        });
+        buttonSQRT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (editText == null) {
+                    editText.setText("");
+                } else {
+                    valueOne = Double.parseDouble(editText.getText() + "");
+                    sqrt = true;
+                    displayText.setText("sqrt("+valueOne+")");
+                    editText.setText(null);
+
+                }
+            }
+        });
+        buttonXTo2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (editText == null) {
+                    editText.setText("");
+                } else {
+                    valueOne = Double.parseDouble(editText.getText() + "");
+                    xto2 = true;
+                    displayText.setText(valueOne+"^2");
+                    editText.setText(null);
+
+                }
+            }
+        });
+        buttonXToY.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (editText == null) {
+                    editText.setText("");
+                } else {
+                    valueOne = Double.parseDouble(editText.getText() + "");
+                    xtoy = true;
+                    displayText.setText(valueOne+"^");
+                    editText.setText(null);
+
+                }
+            }
+        });
+        buttonLOG.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (editText == null) {
+                    editText.setText("");
+                } else {
+                    valueOne = Double.parseDouble(editText.getText() + "");
+                    log = true;
+                    displayText.setText("LOG("+valueOne+")");
+                    editText.setText(null);
+
+                }
+            }
+        });
+
+
+
+
+
+
     }
     private void computeCalculation() {
         if(!Double.isNaN(valueOne)) {
-            valueTwo = Float.parseFloat(editText.getText().toString());
+            valueTwo = Double.parseDouble(editText.getText().toString());
             editText.setText(null);
 
             if(add)
@@ -214,12 +350,30 @@ public class SimpleActivity extends AppCompatActivity {
                 valueOne = this.valueOne * valueTwo;
             else if(div)
                 valueOne = this.valueOne / valueTwo;
+            else if(sin)
+                valueOne =  Math.sin(this.valueOne);
+            else if(cos)
+                valueOne =  Math.cos(this.valueOne);
+            else if(tan)
+                valueOne =  Math.tan(this.valueOne);
+            else if(ln)
+                valueOne =  Math.log(this.valueOne);
+            else  if(sqrt)
+                valueOne =  Math.sqrt(this.valueOne);
+            else if(xto2)
+                valueOne *= valueOne;
+            else  if (xtoy)
+                valueOne =  Math.pow(this.valueOne,valueTwo);
+            else if (log)
+                valueOne =  Math.log10(this.valueOne);
         }
         else {
             try {
-                valueOne =  Float.parseFloat(editText.getText().toString());
+                valueOne =  Double.parseDouble(editText.getText().toString());
             }
             catch (Exception e){}
         }
     }
 }
+
+
