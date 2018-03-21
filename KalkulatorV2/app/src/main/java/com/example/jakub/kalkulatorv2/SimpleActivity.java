@@ -3,6 +3,7 @@ package com.example.jakub.kalkulatorv2;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -22,7 +23,11 @@ public class SimpleActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.simple_calculator);
+
+
 
         Button button0 = findViewById(R.id.button0);
         Button button1 = findViewById(R.id.button1);
@@ -116,6 +121,12 @@ public class SimpleActivity extends AppCompatActivity {
                 editText.setText(editText.getText() + "9");
             }
         });
+        buttonDOT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editText.setText(editText.getText()+".");
+            }
+        });
         buttonADD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,9 +144,9 @@ public class SimpleActivity extends AppCompatActivity {
         buttonSUB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (editText == null) {
+                if(editText == null) {
                     editText.setText("");
-                } else {
+                }else {
                     valueOne = Float.parseFloat(editText.getText() + "");
                     sub = true;
                     displayText.setText(valueOne + " - ");

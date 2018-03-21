@@ -27,19 +27,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="500dp"
+        android:layout_weight="2"
         android:gravity="center"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/buttonSIN"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="SIN" />
 
             <Button
                 android:id="@+id/buttonSQRT"
@@ -75,14 +72,11 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical">
 
 
-            <Button
-                android:id="@+id/buttonCOS"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="COS" />
+
 
             <Button
                 android:id="@+id/buttonXTo2"
@@ -118,13 +112,10 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/buttonTAN"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TAN" />
+
 
             <Button
                 android:id="@+id/buttonXtoY"
@@ -149,19 +140,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/_9" />
-
             <Button
                 android:id="@+id/buttonDOT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/DOT" />
+                android:text="@string/DOT"/>
+
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical">
+            <Button
+                android:id="@+id/buttonSIN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SIN" />
 
+            <Button
+                android:id="@+id/buttonCOS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="COS" />
+            <Button
+                android:id="@+id/buttonTAN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TAN" />
             <Button
                 android:id="@+id/buttonLN"
                 android:layout_width="match_parent"
@@ -173,6 +181,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="LOG" />
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/buttonADD"
@@ -198,12 +217,22 @@
                 android:layout_height="wrap_content"
                 android:text="@string/DIV" />
 
+
+
+
+
+
+
+
+
+
             <Button
                 android:id="@+id/buttonEQU"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/EQU" />
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

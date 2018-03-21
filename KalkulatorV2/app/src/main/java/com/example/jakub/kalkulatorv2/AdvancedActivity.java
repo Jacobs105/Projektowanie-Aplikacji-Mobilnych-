@@ -3,8 +3,11 @@ package com.example.jakub.kalkulatorv2;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.text.DecimalFormat;
 
 
 /**
@@ -16,10 +19,12 @@ public class AdvancedActivity extends AppCompatActivity{
     private TextView editText, displayText;
     private double valueOne;
     private double valueTwo;
-    private boolean add, sub, mul, div,sin,cos,tan,ln,sqrt,xto2,xtoy,log ,equ, c;
+    private boolean add, sub, mul, div,xtoy ,equ, c;
+    private DecimalFormat df = new DecimalFormat("#.#####");
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.advanced_calculator);
 
         Button button0 = findViewById(R.id.button0);
@@ -123,6 +128,12 @@ public class AdvancedActivity extends AppCompatActivity{
                 editText.setText(editText.getText() + "9");
             }
         });
+        buttonDOT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editText.setText(editText.getText()+".");
+            }
+        });
         buttonADD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -190,14 +201,8 @@ public class AdvancedActivity extends AppCompatActivity{
                 sub=false;
                 mul=false;
                 div=false;
-                sin=false;
-                cos= false;
-                tan=false;
-                ln=false;
-                sqrt = false;
-                xto2= false;
                 xtoy= false;
-                log = false;
+
 
 
             }
@@ -223,10 +228,12 @@ public class AdvancedActivity extends AppCompatActivity{
                 if (editText == null) {
                     editText.setText("");
                 } else {
+                    displayText.setText("");
                     valueOne = Double.parseDouble(editText.getText() + "");
-                    sin = true;
-                    displayText.setText("sin("+valueOne+")");
+                    valueOne =  Math.sin(Math.toRadians(valueOne));
+                    displayText.setText(""+df.format(valueOne));
                     editText.setText(null);
+                    valueOne=Double.NaN;
 
                 }
             }
@@ -238,11 +245,12 @@ public class AdvancedActivity extends AppCompatActivity{
                 if (editText == null) {
                     editText.setText("");
                 } else {
+                    displayText.setText("");
                     valueOne = Double.parseDouble(editText.getText() + "");
-                    cos = true;
-                    displayText.setText("cos("+valueOne+")");
+                    valueOne =  Math.cos(Math.toRadians(valueOne));
+                    displayText.setText(""+df.format(valueOne));
                     editText.setText(null);
-
+                    valueOne=Double.NaN;
                 }
             }
         });
@@ -252,11 +260,12 @@ public class AdvancedActivity extends AppCompatActivity{
                 if (editText == null) {
                     editText.setText("");
                 } else {
+                    displayText.setText("");
                     valueOne = Double.parseDouble(editText.getText() + "");
-                    tan = true;
-                    displayText.setText("tan("+valueOne+")");
+                    valueOne =  Math.tan(Math.toRadians(valueOne));
+                    displayText.setText(""+df.format(valueOne));
                     editText.setText(null);
-
+                    valueOne=Double.NaN;
                 }
             }
         });
@@ -266,11 +275,12 @@ public class AdvancedActivity extends AppCompatActivity{
                 if (editText == null) {
                     editText.setText("");
                 } else {
+                    displayText.setText("");
                     valueOne = Double.parseDouble(editText.getText() + "");
-                    ln = true;
-                    displayText.setText("ln("+valueOne+")");
+                    valueOne =  Math.log(valueOne);
+                    displayText.setText(""+df.format(valueOne));
                     editText.setText(null);
-
+                    valueOne=Double.NaN;
                 }
             }
         });
@@ -280,11 +290,12 @@ public class AdvancedActivity extends AppCompatActivity{
                 if (editText == null) {
                     editText.setText("");
                 } else {
+                    displayText.setText("");
                     valueOne = Double.parseDouble(editText.getText() + "");
-                    sqrt = true;
-                    displayText.setText("sqrt("+valueOne+")");
+                    valueOne =  Math.sqrt(valueOne);
+                    displayText.setText(""+df.format(valueOne));
                     editText.setText(null);
-
+                    valueOne=Double.NaN;
                 }
             }
         });
@@ -294,11 +305,12 @@ public class AdvancedActivity extends AppCompatActivity{
                 if (editText == null) {
                     editText.setText("");
                 } else {
+                    displayText.setText("");
                     valueOne = Double.parseDouble(editText.getText() + "");
-                    xto2 = true;
-                    displayText.setText(valueOne+"^2");
+                    valueOne *= valueOne;
+                    displayText.setText(""+df.format(valueOne));
                     editText.setText(null);
-
+                    valueOne=Double.NaN;
                 }
             }
         });
@@ -308,6 +320,7 @@ public class AdvancedActivity extends AppCompatActivity{
                 if (editText == null) {
                     editText.setText("");
                 } else {
+                    displayText.setText("");
                     valueOne = Double.parseDouble(editText.getText() + "");
                     xtoy = true;
                     displayText.setText(valueOne+"^");
@@ -322,11 +335,12 @@ public class AdvancedActivity extends AppCompatActivity{
                 if (editText == null) {
                     editText.setText("");
                 } else {
+                    displayText.setText("");
                     valueOne = Double.parseDouble(editText.getText() + "");
-                    log = true;
-                    displayText.setText("LOG("+valueOne+")");
+                    valueOne =  Math.log10(valueOne);
+                    displayText.setText(""+df.format(valueOne));
                     editText.setText(null);
-
+                    valueOne=Double.NaN;
                 }
             }
         });
@@ -350,22 +364,10 @@ public class AdvancedActivity extends AppCompatActivity{
                 valueOne = this.valueOne * valueTwo;
             else if(div)
                 valueOne = this.valueOne / valueTwo;
-            else if(sin)
-                valueOne =  Math.sin(this.valueOne);
-            else if(cos)
-                valueOne =  Math.cos(this.valueOne);
-            else if(tan)
-                valueOne =  Math.tan(this.valueOne);
-            else if(ln)
-                valueOne =  Math.log(this.valueOne);
-            else  if(sqrt)
-                valueOne =  Math.sqrt(this.valueOne);
-            else if(xto2)
-                valueOne *= valueOne;
             else  if (xtoy)
                 valueOne =  Math.pow(this.valueOne,valueTwo);
-            else if (log)
-                valueOne =  Math.log10(this.valueOne);
+
+
         }
         else {
             try {
@@ -373,6 +375,13 @@ public class AdvancedActivity extends AppCompatActivity{
             }
             catch (Exception e){}
         }
+    }
+    protected void onDestroy() {
+        super.onDestroy();
+        Bundle bundle = new Bundle();
+        bundle.putString("editText", String.valueOf(editText));
+        bundle.putString("displayText", String.valueOf(displayText));
+        onSaveInstanceState(bundle);
     }
 }
 
