@@ -17,4 +17,6 @@
     <string name="_7">7</string>
     <string name="_4">4</string>
     <string name="c">C</string>
+    <string name="neg">+/-</string>
+    <string name="pr">%</string>
 </resources>

@@ -1,11 +1,11 @@
 package com.example.jakub.kalkulatorv2;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.TextView;
+        import android.os.Bundle;
+        import android.support.v7.app.AppCompatActivity;
+        import android.view.View;
+        import android.view.Window;
+        import android.widget.Button;
+        import android.widget.TextView;
 
 /**
  * Created by Jakub on 2018-03-14.
@@ -19,6 +19,8 @@ public class SimpleActivity extends AppCompatActivity {
     private float valueOne;
     private float valueTwo;
     private boolean add, sub, mul, div, equ, c;
+    private String myEditText;
+    private String myDisplayText;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,7 @@ public class SimpleActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.simple_calculator);
 
-
+        getSavedData(savedInstanceState);
 
         Button button0 = findViewById(R.id.button0);
         Button button1 = findViewById(R.id.button1);
@@ -46,10 +48,13 @@ public class SimpleActivity extends AppCompatActivity {
         Button buttonEQU = findViewById(R.id.buttonEQU);
         Button buttonDOT = findViewById(R.id.buttonDOT);
         Button buttonC = findViewById(R.id.buttonC);
+        Button buttonNG = findViewById(R.id.buttonNG);
 
         displayText = findViewById(R.id.displayText);
         editText = findViewById(R.id.editText);
 
+        displayText.setText(myDisplayText);
+        editText.setText(myEditText);
 
         button0.setOnClickListener(new View.OnClickListener() {
 
@@ -211,6 +216,16 @@ public class SimpleActivity extends AppCompatActivity {
                 }
             }
         });
+        buttonNG.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                double valueToNG = Double.parseDouble((String) editText.getText());
+                if(valueToNG != Double.NaN){
+                    valueToNG = -(valueToNG);
+                    editText.setText(""+valueToNG);
+                }
+            }
+        });
     }
     private void computeCalculation() {
         if(!Double.isNaN(valueOne)) {
@@ -231,6 +246,25 @@ public class SimpleActivity extends AppCompatActivity {
                 valueOne =  Float.parseFloat(editText.getText().toString());
             }
             catch (Exception e){}
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+
+
+        savedInstanceState.putString("displayText", String.valueOf(displayText.getText()));
+        savedInstanceState.putString("editText", String.valueOf(editText.getText()));
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+
+    public  void getSavedData(Bundle savedInstanceState){
+
+        if(savedInstanceState != null) {
+            myEditText = savedInstanceState.getString("editText");
+            myDisplayText = savedInstanceState.getString("displayText");
         }
     }
 }

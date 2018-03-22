@@ -21,11 +21,16 @@ public class AdvancedActivity extends AppCompatActivity{
     private double valueTwo;
     private boolean add, sub, mul, div,xtoy ,equ, c;
     private DecimalFormat df = new DecimalFormat("#.#####");
+    private String myEditText;
+    private String myDisplayText;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.advanced_calculator);
+
+
+        getSavedData(savedInstanceState);
 
         Button button0 = findViewById(R.id.button0);
         Button button1 = findViewById(R.id.button1);
@@ -52,11 +57,39 @@ public class AdvancedActivity extends AppCompatActivity{
         Button buttonXTo2 = findViewById(R.id.buttonXTo2);
         Button buttonXToY = findViewById(R.id.buttonXtoY);
         Button buttonLOG = findViewById(R.id.buttonLOG);
+        Button buttonpr = findViewById(R.id.buttonPR);
+        Button buttonNG = findViewById(R.id.buttonNG);
 
 
         displayText = findViewById(R.id.displayText);
         editText = findViewById(R.id.editText);
 
+
+
+      displayText.setText(myDisplayText);
+      editText.setText(myEditText);
+
+
+        buttonpr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                valueOne = Double.parseDouble(String.valueOf(editText.getText()));
+                valueOne = valueOne/100;
+                displayText.setText(""+valueOne);
+                valueOne = Double.NaN;
+            }
+        });
+
+        buttonNG.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                double valueToNG = Double.parseDouble(String.valueOf(editText.getText()));
+                if(valueToNG != Double.NaN){
+                    valueToNG = -(valueToNG);
+                    editText.setText(""+valueToNG);
+                }
+            }
+        });
 
         button0.setOnClickListener(new View.OnClickListener() {
 
@@ -376,12 +409,22 @@ public class AdvancedActivity extends AppCompatActivity{
             catch (Exception e){}
         }
     }
-    protected void onDestroy() {
-        super.onDestroy();
-        Bundle bundle = new Bundle();
-        bundle.putString("editText", String.valueOf(editText));
-        bundle.putString("displayText", String.valueOf(displayText));
-        onSaveInstanceState(bundle);
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+
+
+        savedInstanceState.putString("displayText", String.valueOf(displayText.getText()));
+        savedInstanceState.putString("editText", String.valueOf(editText.getText()));
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    public  void getSavedData(Bundle savedInstanceState){
+
+        if(savedInstanceState != null) {
+            myEditText = savedInstanceState.getString("editText");
+            myDisplayText = savedInstanceState.getString("displayText");
+        }
     }
 }
 
