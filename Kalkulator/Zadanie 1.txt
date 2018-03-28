@@ -1,3 +1,0 @@
-Zrobiæ kalkulator z dwoma trybami (Zwyk³y i naukowy).
-
-Próba zrobienia tego jako prywatny kod 
