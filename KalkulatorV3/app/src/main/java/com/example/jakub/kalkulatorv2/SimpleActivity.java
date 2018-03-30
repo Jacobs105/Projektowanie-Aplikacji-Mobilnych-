@@ -137,20 +137,30 @@ public class SimpleActivity extends AppCompatActivity {
         buttonADD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (editText == null) {
-                    editText.setText("");
-                } else {
-                    valueOne = Float.parseFloat(editText.getText() + "");
-                    add = true;
-                    displayText.setText(valueOne + " + ");
-                    editText.setText(null);
-
+                if(displayText == null) {
+                    if (editText == null) {
+                        editText.setText("");
+                    } else {
+                        valueOne = Float.parseFloat(editText.getText() + "");
+                        add = true;
+                        displayText.setText(valueOne + " + ");
+                        editText.setText(null);
+                    }
+                }else{
+                    if(editText == null){
+                        editText.setText("");
+                    }else{
+                        valueTwo = Float.parseFloat(editText.getText()+"");
+                        float value = valueOne +valueTwo;
+                        displayText.setText(value + "");
+                    }
                 }
             }
         });
         buttonSUB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(editText == null) {
                     editText.setText("");
                 }else {

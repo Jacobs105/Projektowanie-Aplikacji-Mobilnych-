@@ -1,11 +1,17 @@
 package com.example.jakub.kalkulatorv2;
 
-        import android.os.Bundle;
-        import android.support.v7.app.AppCompatActivity;
-        import android.view.View;
-        import android.view.Window;
-        import android.widget.Button;
-        import android.widget.TextView;
+import android.annotation.SuppressLint;
+import android.icu.text.DecimalFormat;
+import android.icu.text.NumberFormat;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by Jakub on 2018-03-14.
@@ -16,18 +22,30 @@ package com.example.jakub.kalkulatorv2;
 public class SimpleActivity extends AppCompatActivity {
 
     private TextView editText, displayText;
-    private float valueOne;
-    private float valueTwo;
+    private double valueOne = Double.NaN;
+    private double valueTwo;
     private boolean add, sub, mul, div, equ, c;
     private String myEditText;
     private String myDisplayText;
+    private final char ADDITION = '+';
+    private static final char SUBTRACTION = '-';
+    private static final char MULTIPLICATION = '*';
+    private static final char DIVISION = '/';
+
+    private char CURRENT_ACTION;
+
+    private NumberFormat decimalFormat ;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.simple_calculator);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            decimalFormat = new DecimalFormat("#.#####");
+        }
 
         getSavedData(savedInstanceState);
 
@@ -129,125 +147,123 @@ public class SimpleActivity extends AppCompatActivity {
         buttonDOT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editText.setText(editText.getText()+".");
-            }
-        });
-        buttonADD.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (editText == null) {
-                    editText.setText("");
-                } else {
-                    valueOne = Float.parseFloat(editText.getText() + "");
-                    add = true;
-                    displayText.setText(valueOne + " + ");
-                    editText.setText(null);
-
-                }
-            }
-        });
-        buttonSUB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(editText == null) {
-                    editText.setText("");
-                }else {
-                    valueOne = Float.parseFloat(editText.getText() + "");
-                    sub = true;
-                    displayText.setText(valueOne + " - ");
-                    editText.setText(null);
-
-                }
-            }
-        });
-        buttonMUL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (editText == null) {
-                    editText.setText("");
-                } else {
-                    valueOne = Float.parseFloat(editText.getText() + "");
-                    mul = true;
-                    displayText.setText(valueOne + " * ");
-                    editText.setText(null);
-
-                }
-            }
-        });
-        buttonDIV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (editText == null) {
-                    editText.setText("");
-                } else {
-                    valueOne = Float.parseFloat(editText.getText() + "");
-                    div = true;
-                    displayText.setText(valueOne + " / ");
-                    editText.setText(null);
-
-                }
-            }
-        });
-        buttonEQU.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                computeCalculation();
-                displayText.setText(editText.getText().toString()+ valueOne);
-
-                //valueOne = Float.NaN;
-                add= false;
-                sub=false;
-                mul=false;
-                div=false;
-
-            }
-        });
-        buttonC.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(editText.getText().length() >0){
-                    CharSequence currentText = editText.getText();
-                    editText.setText(currentText.subSequence(0,currentText.length()-1));
-                }else{
-                    valueOne = Float.NaN;
-                    valueTwo = Float.NaN;
-                    editText.setText("");
-                    displayText.setText("");
-                }
+                if (!editText.getText().toString().contains("."))
+                    editText.setText(editText.getText() + ".");
             }
         });
         buttonNG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double valueToNG = Double.parseDouble((String) editText.getText());
-                if(valueToNG != Double.NaN){
+                double valueToNG = Double.parseDouble(String.valueOf(editText.getText()));
+                if (valueToNG != Double.NaN) {
                     valueToNG = -(valueToNG);
-                    editText.setText(""+valueToNG);
+                    editText.setText("" + valueToNG);
                 }
             }
         });
-    }
-    private void computeCalculation() {
-        if(!Double.isNaN(valueOne)) {
-            valueTwo = Float.parseFloat(editText.getText().toString());
-            editText.setText(null);
-
-            if(add)
-                valueOne = this.valueOne + valueTwo;
-            else if(sub)
-                valueOne = this.valueOne - valueTwo;
-            else if(mul)
-                valueOne = this.valueOne * valueTwo;
-            else if(div)
-                valueOne = this.valueOne / valueTwo;
-        }
-        else {
-            try {
-                valueOne =  Float.parseFloat(editText.getText().toString());
+        buttonC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editText.getText().length() > 0) {
+                    CharSequence currentText = editText.getText();
+                    editText.setText(currentText.subSequence(0, currentText.length() - 1));
+                } else {
+                    editText.setText(null);
+                    displayText.setText(null);
+                    valueOne = Float.NaN;
+                    valueTwo = Float.NaN;
+                }
             }
-            catch (Exception e){}
-        }
+        });
+
+
+        buttonADD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                computeCalculation();
+                CURRENT_ACTION = ADDITION;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    displayText.setText(decimalFormat.format(valueOne) + "+");
+                }
+                editText.setText(null);
+            }
+        });
+
+        buttonSUB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                computeCalculation();
+                CURRENT_ACTION = SUBTRACTION;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    displayText.setText(decimalFormat.format(valueOne) + "-");
+                }
+                editText.setText(null);
+            }
+        });
+
+        buttonMUL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                computeCalculation();
+                CURRENT_ACTION = MULTIPLICATION;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    displayText.setText(decimalFormat.format(valueOne) + "*");
+                }
+                editText.setText(null);
+            }
+        });
+
+        buttonDIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                computeCalculation();
+                CURRENT_ACTION = DIVISION;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    displayText.setText(decimalFormat.format(valueOne) + "/");
+                }
+                editText.setText(null);
+            }
+        });
+
+        buttonEQU.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View view) {
+                computeCalculation();
+                displayText.setText(displayText.getText().toString() +
+                        decimalFormat.format(valueTwo) + " = " + decimalFormat.format(valueOne));
+                valueOne = Double.NaN;
+                CURRENT_ACTION = '0';
+            }
+        });
     }
+        private void computeCalculation() {
+            if(!Double.isNaN(valueOne)) {
+                try {
+                    valueTwo = Double.parseDouble(editText.getText().toString());
+                    editText.setText(null);
+                }catch(Exception e){e.printStackTrace();}
+
+
+
+                if(CURRENT_ACTION == ADDITION)
+                    valueOne = this.valueOne + valueTwo;
+                else if(CURRENT_ACTION == SUBTRACTION)
+                    valueOne = this.valueOne - valueTwo;
+                else if(CURRENT_ACTION == MULTIPLICATION)
+                    valueOne = this.valueOne * valueTwo;
+                else if(CURRENT_ACTION == DIVISION)
+                    valueOne = this.valueOne / valueTwo;
+            }
+            else {
+                try {
+                    valueOne = Double.parseDouble(editText.getText().toString());
+                }
+                catch (Exception e){}
+            }
+        }
+
+
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
