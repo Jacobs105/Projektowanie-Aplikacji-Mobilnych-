@@ -154,11 +154,19 @@ public class SimpleActivity extends AppCompatActivity {
         buttonNG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double valueToNG = Double.parseDouble(String.valueOf(editText.getText()));
-                if (valueToNG != Double.NaN) {
-                    valueToNG = -(valueToNG);
-                    editText.setText("" + valueToNG);
+                double valueToNG = Double.NaN;
+                try {
+                     valueToNG = Double.parseDouble(String.valueOf(editText.getText()));
+                }catch (Exception e){
+                    
                 }
+                    if (Double.isNaN(valueToNG)) {
+                        Toast.makeText(SimpleActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+                    }else{
+                        valueToNG = -(valueToNG);
+                        editText.setText("" + valueToNG);
+                    }
+
             }
         });
         buttonC.setOnClickListener(new View.OnClickListener() {
@@ -170,8 +178,8 @@ public class SimpleActivity extends AppCompatActivity {
                 } else {
                     editText.setText(null);
                     displayText.setText(null);
-                    valueOne = Float.NaN;
-                    valueTwo = Float.NaN;
+                    valueOne =Double.NaN;
+                    valueTwo = Double.NaN;
                 }
             }
         });
@@ -180,12 +188,19 @@ public class SimpleActivity extends AppCompatActivity {
         buttonADD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 computeCalculation();
-                CURRENT_ACTION = ADDITION;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    displayText.setText(decimalFormat.format(valueOne) + "+");
+                if(Double.isNaN(valueOne)) {
+                    Toast.makeText(SimpleActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+
+                }else{
+
+                    CURRENT_ACTION = ADDITION;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        displayText.setText(decimalFormat.format(valueOne) + "+");
+                    }
+                    editText.setText(null);
                 }
-                editText.setText(null);
             }
         });
 
@@ -193,11 +208,16 @@ public class SimpleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 computeCalculation();
-                CURRENT_ACTION = SUBTRACTION;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    displayText.setText(decimalFormat.format(valueOne) + "-");
+                if(Double.isNaN(valueOne)) {
+                    Toast.makeText(SimpleActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+
+                }else {
+                    CURRENT_ACTION = SUBTRACTION;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        displayText.setText(decimalFormat.format(valueOne) + "-");
+                    }
+                    editText.setText(null);
                 }
-                editText.setText(null);
             }
         });
 
@@ -205,11 +225,16 @@ public class SimpleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 computeCalculation();
-                CURRENT_ACTION = MULTIPLICATION;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    displayText.setText(decimalFormat.format(valueOne) + "*");
+                if(Double.isNaN(valueOne)) {
+                    Toast.makeText(SimpleActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+
+                }else {
+                    CURRENT_ACTION = MULTIPLICATION;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        displayText.setText(decimalFormat.format(valueOne) + "*");
+                    }
+                    editText.setText(null);
                 }
-                editText.setText(null);
             }
         });
 
@@ -217,11 +242,16 @@ public class SimpleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 computeCalculation();
-                CURRENT_ACTION = DIVISION;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    displayText.setText(decimalFormat.format(valueOne) + "/");
+                if(Double.isNaN(valueOne)) {
+                    Toast.makeText(SimpleActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+
+                }else {
+                    CURRENT_ACTION = DIVISION;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        displayText.setText(decimalFormat.format(valueOne) + "/");
+                    }
+                    editText.setText(null);
                 }
-                editText.setText(null);
             }
         });
 
@@ -230,10 +260,15 @@ public class SimpleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 computeCalculation();
-                displayText.setText(displayText.getText().toString() +
-                        decimalFormat.format(valueTwo) + " = " + decimalFormat.format(valueOne));
-                valueOne = Double.NaN;
-                CURRENT_ACTION = '0';
+                if(Double.isNaN(valueOne)) {
+                    Toast.makeText(SimpleActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+
+                }else {
+                    displayText.setText(displayText.getText().toString() +
+                            decimalFormat.format(valueTwo) + " = " + decimalFormat.format(valueOne));
+                    valueOne = Double.NaN;
+                    CURRENT_ACTION = '0';
+                }
             }
         });
     }

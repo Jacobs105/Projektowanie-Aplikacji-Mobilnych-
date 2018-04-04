@@ -91,11 +91,19 @@ public class AdvancedActivity extends AppCompatActivity{
         buttonNG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double valueToNG = Double.parseDouble(String.valueOf(editText.getText()));
-                if (valueToNG != Double.NaN) {
+                double valueToNG = Double.NaN;
+                try {
+                    valueToNG = Double.parseDouble(String.valueOf(editText.getText()));
+                }catch (Exception e){
+
+                }
+                if (Double.isNaN(valueToNG)) {
+                    Toast.makeText(AdvancedActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+                }else{
                     valueToNG = -(valueToNG);
                     editText.setText("" + valueToNG);
                 }
+
             }
         });
 
@@ -172,17 +180,23 @@ public class AdvancedActivity extends AppCompatActivity{
         buttonDOT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editText.setText(editText.getText() + ".");
+                if (!editText.getText().toString().contains("."))
+                    editText.setText(editText.getText() + ".");
             }
         });
         buttonADD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                computeCalculation();
-                CURRENT_ACTION = ADDITION;
 
-                displayText.setText(decimalFormat.format(valueOne) + "+");
-                editText.setText(null);
+                computeCalculation();
+                if (Double.isNaN(valueOne)) {
+                    Toast.makeText(AdvancedActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+                } else {
+                    CURRENT_ACTION = ADDITION;
+
+                    displayText.setText(decimalFormat.format(valueOne) + "+");
+                    editText.setText(null);
+                }
             }
         });
 
@@ -190,23 +204,30 @@ public class AdvancedActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 computeCalculation();
+                if (Double.isNaN(valueOne)) {
+                    Toast.makeText(AdvancedActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+                } else {
                 CURRENT_ACTION = SUBTRACTION;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     displayText.setText(decimalFormat.format(valueOne) + "-");
                 }
                 editText.setText(null);
-            }
+            }}
         });
 
         buttonMUL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 computeCalculation();
+                if (Double.isNaN(valueOne)) {
+                    Toast.makeText(AdvancedActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+                } else {
                 CURRENT_ACTION = MULTIPLICATION;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     displayText.setText(decimalFormat.format(valueOne) + "*");
                 }
                 editText.setText(null);
+                }
             }
         });
 
@@ -214,11 +235,15 @@ public class AdvancedActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 computeCalculation();
-                CURRENT_ACTION = DIVISION;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    displayText.setText(decimalFormat.format(valueOne) + "/");
+                if (Double.isNaN(valueOne)) {
+                    Toast.makeText(AdvancedActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+                } else {
+                    CURRENT_ACTION = DIVISION;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        displayText.setText(decimalFormat.format(valueOne) + "/");
+                    }
+                    editText.setText(null);
                 }
-                editText.setText(null);
             }
         });
 
@@ -227,12 +252,13 @@ public class AdvancedActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 computeCalculation();
-                if(valueTwo != Double.NaN) {
+                if(Double.isNaN(valueTwo)) {
+                    displayText.setText(displayText.getText().toString() +
+                            " = " + decimalFormat.format(valueOne));
+                }else{
+
                     displayText.setText(displayText.getText().toString() +
                             decimalFormat.format(valueTwo) + " = " + decimalFormat.format(valueOne));
-                }else{
-                    displayText.setText(displayText.getText().toString() +
-                             " = " + decimalFormat.format(valueOne));
                 }
                 valueOne = Double.NaN;
                 CURRENT_ACTION = '0';
@@ -258,10 +284,14 @@ public class AdvancedActivity extends AppCompatActivity{
             public void onClick(View view) {
 
                 computeCalculation();
-                CURRENT_ACTION = SINUS;
-                displayText.setText("sin("+decimalFormat.format(valueOne)+")");
-                editText.setText(null);
+                if (Double.isNaN(valueOne)) {
+                    Toast.makeText(AdvancedActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+                } else {
+                    CURRENT_ACTION = SINUS;
+                    displayText.setText("sin(" + decimalFormat.format(valueOne) + ")");
+                    editText.setText(null);
 
+                }
             }
         });
 
@@ -269,73 +299,105 @@ public class AdvancedActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 computeCalculation();
-                CURRENT_ACTION = COSIN;
-                displayText.setText("cos("+decimalFormat.format(valueOne)+")");
-                editText.setText(null);
+                if (Double.isNaN(valueOne)) {
+                    Toast.makeText(AdvancedActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+                } else {
+                    CURRENT_ACTION = COSIN;
+                    displayText.setText("cos(" + decimalFormat.format(valueOne) + ")");
+                    editText.setText(null);
                 }
+            }
 
         });
         buttonTAN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 computeCalculation();
-                CURRENT_ACTION = TAN;
-                displayText.setText("tan("+decimalFormat.format(valueOne)+")");
-                editText.setText(null);
+                if (Double.isNaN(valueOne)) {
+                    Toast.makeText(AdvancedActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+                } else {
+                    CURRENT_ACTION = TAN;
+                    displayText.setText("tan(" + decimalFormat.format(valueOne) + ")");
+                    editText.setText(null);
+                }
             }
         });
         buttonLN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 computeCalculation();
-                CURRENT_ACTION = LN;
-                displayText.setText("ln("+decimalFormat.format(valueOne)+")");
-                editText.setText(null);
+                if (Double.isNaN(valueOne)) {
+                    Toast.makeText(AdvancedActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+                } else {
+                    CURRENT_ACTION = LN;
+                    displayText.setText("ln(" + decimalFormat.format(valueOne) + ")");
+                    editText.setText(null);
+                }
             }
         });
         buttonSQRT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 computeCalculation();
-                CURRENT_ACTION = SQRT;
-                displayText.setText("sqrt("+decimalFormat.format(valueOne)+")");
-                editText.setText(null);
+                if (Double.isNaN(valueOne)) {
+                    Toast.makeText(AdvancedActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+                } else {
+                    CURRENT_ACTION = SQRT;
+                    displayText.setText("sqrt(" + decimalFormat.format(valueOne) + ")");
+                    editText.setText(null);
+                }
             }
         });
         buttonXTo2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 computeCalculation();
-                CURRENT_ACTION = POW;
-                displayText.setText(decimalFormat.format(valueOne)+"^2");
-                editText.setText(null);
+                if (Double.isNaN(valueOne)) {
+                    Toast.makeText(AdvancedActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+                } else {
+                    CURRENT_ACTION = POW;
+                    displayText.setText(decimalFormat.format(valueOne) + "^2");
+                    editText.setText(null);
+                }
             }
         });
         buttonXToY.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 computeCalculation();
-                CURRENT_ACTION = POWT;
-                displayText.setText(decimalFormat.format(valueOne)+"^");
-                editText.setText(null);
+                if (Double.isNaN(valueOne)) {
+                    Toast.makeText(AdvancedActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+                } else {
+                    CURRENT_ACTION = POWT;
+                    displayText.setText(decimalFormat.format(valueOne) + "^");
+                    editText.setText(null);
+                }
             }
         });
         buttonLOG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 computeCalculation();
-                CURRENT_ACTION = LOG;
-                displayText.setText("log10("+decimalFormat.format(valueOne)+")");
-                editText.setText(null);
+                if (Double.isNaN(valueOne)) {
+                    Toast.makeText(AdvancedActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+                } else {
+                    CURRENT_ACTION = LOG;
+                    displayText.setText("log10(" + decimalFormat.format(valueOne) + ")");
+                    editText.setText(null);
+                }
             }
         });
         buttonpr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 computeCalculation();
-                CURRENT_ACTION = PR;
-                displayText.setText(decimalFormat.format(valueOne)+"%");
-                editText.setText(null);
+                if (Double.isNaN(valueOne)) {
+                    Toast.makeText(AdvancedActivity.this, "No Value", Toast.LENGTH_SHORT).show();
+                } else {
+                    CURRENT_ACTION = PR;
+                    displayText.setText(decimalFormat.format(valueOne) + "%");
+                    editText.setText(null);
+                }
             }
         });
 
