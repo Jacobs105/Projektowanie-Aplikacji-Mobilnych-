@@ -84,6 +84,8 @@ public class AdvancedActivity extends AppCompatActivity{
 
         displayText.setText(myDisplayText);
         editText.setText(myEditText);
+        readText(displayText);
+
 
 
 
@@ -467,6 +469,7 @@ public class AdvancedActivity extends AppCompatActivity{
         savedInstanceState.putString("displayText", String.valueOf(displayText.getText()));
         savedInstanceState.putString("editText", String.valueOf(editText.getText()));
 
+
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -475,7 +478,18 @@ public class AdvancedActivity extends AppCompatActivity{
         if(savedInstanceState != null) {
             myEditText = savedInstanceState.getString("editText");
             myDisplayText = savedInstanceState.getString("displayText");
+
         }
+    }
+
+
+    private void readText(TextView text ){
+
+        if(text.getText().toString().contains(ADDITION+"")){
+            CURRENT_ACTION = ADDITION;
+        }
+
+
     }
 }
 
