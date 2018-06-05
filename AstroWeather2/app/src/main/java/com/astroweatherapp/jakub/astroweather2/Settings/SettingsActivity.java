@@ -18,9 +18,9 @@ import com.astroweatherapp.jakub.astroweather2.R;
 
 public class SettingsActivity extends AppCompatActivity{
 
-    private EditText getLatitude , getLongitude,getTimeZone;
+    private EditText getLatitude , getLongitude,getTimeZone,getRefresh;
     private float latitude,longitude;
-    private int timeZone;
+    private int timeZone ,refresh;
     private SharedPreferences preferences;
 
 
@@ -38,6 +38,8 @@ public class SettingsActivity extends AppCompatActivity{
 
         getTimeZone = findViewById(R.id.getTimeZone);
 
+        getRefresh = findViewById(R.id.getRefresh);
+
 
         Button exit = findViewById(R.id.btn_save_exit);
         exit.setOnClickListener(new View.OnClickListener() {
@@ -47,9 +49,11 @@ public class SettingsActivity extends AppCompatActivity{
                 latitude = Float.parseFloat(String.valueOf(getLatitude.getText()));
                 longitude = Float.parseFloat(String.valueOf(getLongitude.getText()));
                 timeZone = Integer.parseInt(String.valueOf(getTimeZone.getText()));
+                refresh = Integer.parseInt(String.valueOf(getRefresh.getText()));
                 editor.putFloat("latitude",latitude);
                 editor.putFloat("longitude",longitude);
                 editor.putInt("timeZone",timeZone);
+                editor.putInt("refresh",refresh);
                 editor.commit();
                 finish();
             }
